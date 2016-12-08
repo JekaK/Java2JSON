@@ -12,13 +12,14 @@ public class JsonWriter {
 
     private Writer writer;
     private Decompiler decompiler;
+    private StringBuilder builder;
 
     public JsonWriter() {
-        writer = new Writer();
+        writer = new Writer(builder = new StringBuilder());
     }
 
     public JsonWriter(Object object) {
-        writer = new Writer();
+        writer = new Writer(builder = new StringBuilder());
         this.decompiler = new Decompiler(object);
     }
 
@@ -39,6 +40,42 @@ public class JsonWriter {
         return result;
     }
 
+    public void writeArrayObject(Object object) {
+        writer.writeObjectBegin();
+        (new Decompiler(object).getList()).forEach(this::createSimpleJsonObject);
+        writer.writeObjectEnd();
+    }
+
+    public void writeNumberObject(String left, Number right) {
+        writer.writeObjectBegin();
+        writer.writeString(left);
+        writer.writePropertySeparator();
+        writer.writeNumber(right);
+        writer.writeObjectEnd();
+        writer.writeSeparator();
+    }
+
+    public void writeNumber(Number number) {
+        writer.writeNumber(number);
+    }
+
+    public void writeBooleanObject(String left, Boolean right) {
+        writer.writeObjectBegin();
+        writer.writeString(left);
+        writer.writePropertySeparator();
+        writer.writeBoolean(right);
+        writer.writeObjectEnd();
+        writer.writeSeparator();
+    }
+
+    public void writeBoolean(Boolean number) {
+        writer.writeBoolean(number);
+    }
+
+    public StringBuilder getWritableBuilder() {
+        return writer.getValue();
+    }
+
     public void createSimpleJsonObject(Object o) {
         if (o instanceof Pair) {
             if (!(((Pair) o).getRight() instanceof List)) {
@@ -47,7 +84,10 @@ public class JsonWriter {
                 if (((Pair) o).getRight() instanceof Number) {
                     writer.writeNumber((Number) ((Pair) o).getRight());
                 } else {
-                    writer.writeString(((Pair) o).getRight().toString());
+                    if (((Pair) o).getRight() instanceof Boolean) {
+                        writeBoolean((Boolean) ((Pair) o).getRight());
+                    } else
+                        writer.writeString(((Pair) o).getRight().toString());
                 }
                 writer.writeSeparator();
             } else {
@@ -59,7 +99,7 @@ public class JsonWriter {
                 writer.writeSeparator();
             }
         } else if (o instanceof Number) {
-            writer.writeNumber((Number) o);
+            writeNumber((Number) o);
             writer.writeSeparator();
         } else {
             if (o instanceof List) {
@@ -67,15 +107,17 @@ public class JsonWriter {
                 ((List) o).forEach(this::createSimpleJsonObject);
                 writer.writeArrayEnd();
             } else {
-                writer.writeString(o.toString());
-                writer.writeSeparator();
+                if (o instanceof Boolean) {
+                    writeBoolean((Boolean) o);
+                } else {
+                    writer.writeString(o.toString());
+                    writer.writeSeparator();
+                }
             }
         }
     }
 
     private StringBuilder createObjectJson(Object object) {
-        StringBuilder builder = new StringBuilder();
-        writer.setValue(builder);
         writer.writeObjectBegin();
         ((List<Pair<Object, Object>>) object).forEach(this::createSimpleJsonObject);
         writer.writeObjectEnd();

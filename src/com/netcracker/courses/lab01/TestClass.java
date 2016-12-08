@@ -17,6 +17,7 @@ public class TestClass {
     private ArrayList list;
 
     public int anInt = 10;
+    public Boolean aBoolean = false;
     private ArrayList list1;
 
     public TestClass(String value, Double jeka) {
@@ -25,8 +26,7 @@ public class TestClass {
         list = new ArrayList();
         list1 = new ArrayList();
 
-
-        list.add(new Integer(12));
+        list.add(10);
         list.add(new Integer(13));
         list1.add(new Integer(100));
         list1.add(new Integer(101));

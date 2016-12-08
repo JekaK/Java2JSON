@@ -1,13 +1,17 @@
 package com.netcracker.courses.lab01.Mapper;
 
-import jdk.nashorn.internal.ir.debug.JSONWriter;
+import com.netcracker.courses.lab01.Mapper.Interfaces.ArrayJsonMapper;
+import com.netcracker.courses.lab01.Writers.JsonWriter;
 
 /**
  * Created by jeka on 07.12.16.
  */
-public class ObjectArrayMapper<T> extends  JsonMapper<T> {
-    @Override
-    public void write(T object, JSONWriter writer) {
+public class ObjectArrayMapper implements ArrayJsonMapper {
 
+    @Override
+    public void write(Object[] object, JsonWriter writer) {
+        for (Object i : object) {
+            writer.writeArrayObject(i);
+        }
     }
 }

@@ -1,19 +1,17 @@
 package com.netcracker.courses.lab01;
 
-import com.netcracker.courses.lab01.Serializer.JsonSerializer;
+import com.netcracker.courses.lab01.Mapper.Interfaces.ArrayJsonMapper;
+import com.netcracker.courses.lab01.Mapper.ObjectArrayMapper;
 import com.netcracker.courses.lab01.Writers.JsonWriter;
 
 /**
  * Created by jeka on 02.12.16.
  */
 public class Main {
-
-
     public static void main(String[] args) {
-        JsonWriter writer = new JsonWriter(new TestClass("sdf", 12.01));
-        JsonSerializer serializer = new JsonSerializer(writer.createJson());
-        serializer.toJson("file.out");
-        StringBuilder builder = serializer.fromJson("file.out");
-        System.out.println(builder);
+        ArrayJsonMapper arrayMapper = new ObjectArrayMapper();
+        JsonWriter writer = new JsonWriter();
+        arrayMapper.write(new Object[]{new TestClass("asd", 2.0)}, writer);
+        System.out.println(writer.getWritableBuilder());
     }
 }

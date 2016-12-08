@@ -1,25 +1,39 @@
 package com.netcracker.courses.lab01.Serializer;
 
-import java.io.*;
+import com.netcracker.courses.lab01.Mapper.Interfaces.JsonMapper;
+import com.netcracker.courses.lab01.Writers.JsonWriter;
+import jdk.nashorn.internal.ir.debug.JSONWriter;
+
+import java.util.Map;
 
 /**
  * Created by jeka on 05.12.16.
  */
 public class JsonSerializer {
-    private StringBuilder builder;
 
-    public JsonSerializer(StringBuilder builder) {
-        this.builder = builder;
+    private Map<Class, JsonMapper> mappersCache;
+
+    public JsonSerializer() {
+        //TODO:add in list mappers
     }
 
-    public StringBuilder getBuilder() {
-        return builder;
+    public void serialize(Object object, JSONWriter writer) {
+        //TODO:add method body
     }
 
-    public void setBuilder(StringBuilder builder) {
-        this.builder = builder;
+    public JsonMapper getMapper(Class cls) {
+        JsonMapper mapper = mappersCache.get(cls);
+        if (mapper == null) {
+            mapper = new JsonMapper() {
+                @Override
+                public void write(Object object, JsonWriter writer) {
+                    //TODO:add method body
+                }
+            };
+        }
+        return mapper;
     }
-
+/*
     public StringBuilder fromJson(String fileName) {
         builder = new StringBuilder();
         FileInputStream fileIn = null;
@@ -64,5 +78,5 @@ public class JsonSerializer {
             e.printStackTrace();
         }
 
-    }
+    }*/
 }

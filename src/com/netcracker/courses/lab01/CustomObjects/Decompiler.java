@@ -7,6 +7,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -40,20 +41,6 @@ public class Decompiler implements IObject {
         this.object = new Decompiler(object);
     }
 
-    public void showList() {
-        for (Object i : list) {
-            if (i instanceof Pair) {
-                System.out.println("Left " + ((Pair) i).getLeft() + " Right " + ((Pair) i).getRight());
-            }
-            if (i instanceof ArrayList) {
-                System.out.println("Array");
-                for (Object j :
-                        (List) i) {
-                    System.out.println(j);
-                }
-            }
-        }
-    }
 
     public Object recursionDown(Object o, ArrayList result) {
         ArrayList list = null;
@@ -74,9 +61,9 @@ public class Decompiler implements IObject {
         Class cls = o.getClass();
         if (Number.class.isAssignableFrom(cls) || String.class.isAssignableFrom(cls) || StringBuilder.class.isAssignableFrom(cls) || StringBuffer.class.isAssignableFrom(cls)) {
             if (isFromArray)
-                list.add(new Pair<Object, Object>("default", o));
+                list.add(Collections.singletonList(o));
             else
-                list.add(new Pair<Object, Object>(cls, o));
+                list.add(Collections.singletonList(o));
         } else {
             Field[] fields = cls.getDeclaredFields();
             for (Field i : fields) {
@@ -86,15 +73,15 @@ public class Decompiler implements IObject {
                     for (Annotation j : annotations) {
                         if (j instanceof JsonProperty) {
                             try {
-                                result.add(new Pair<>(((JsonProperty) j).type(), i.get(o)));
+                                list.add(new Pair<>(((JsonProperty) j).type(), i.get(o)));
                             } catch (IllegalAccessException e) {
                                 e.printStackTrace();
                             }
                         }
                     }
-                }else {
+                } else {
                     try {
-                        result.add(new Pair<>(i.getName(), i.get(o)));
+                        list.add(new Pair<>(i.getName(), i.get(o)));
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
@@ -113,7 +100,8 @@ public class Decompiler implements IObject {
                     list.add(objectsToList(i, true));
             }
         } else {
-            list.add(objectsToList(object, false));
+            if (((List) objectsToList(object, false)).size() != 0)
+                list.add(objectsToList(object, false));
         }
     }
 }
