@@ -1,6 +1,5 @@
 package com.netcracker.courses.lab01;
 
-import com.netcracker.courses.lab01.Mapper.Interfaces.ArrayJsonMapper;
 import com.netcracker.courses.lab01.Mapper.ObjectArrayMapper;
 import com.netcracker.courses.lab01.Writers.JsonWriter;
 
@@ -9,9 +8,9 @@ import com.netcracker.courses.lab01.Writers.JsonWriter;
  */
 public class Main {
     public static void main(String[] args) {
-        ArrayJsonMapper arrayMapper = new ObjectArrayMapper();
+        ObjectArrayMapper arrayMapper = new ObjectArrayMapper();
         JsonWriter writer = new JsonWriter();
-        arrayMapper.write(new Object[]{new TestClass("asd", 2.0)}, writer);
+        arrayMapper.write(new TestClass[]{new TestClass("2",2.0),new TestClass("2",2.0)}, writer);
         System.out.println(writer.getWritableBuilder());
     }
 }

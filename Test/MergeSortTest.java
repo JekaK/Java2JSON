@@ -1,4 +1,4 @@
-package Test;
+
 
 import com.netcracker.courses.Lab00.Sortings.MergeSort;
 import org.junit.After;

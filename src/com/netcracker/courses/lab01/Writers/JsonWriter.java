@@ -40,11 +40,21 @@ public class JsonWriter {
         return result;
     }
 
+    public void writeArray(Object[] objects) {
+        writer.writeArrayBegin();
+        for (Object i : objects) {
+            writeArrayObject(i);
+        }
+        writer.writeArrayEnd();
+    }
+
     public void writeArrayObject(Object object) {
         writer.writeObjectBegin();
         (new Decompiler(object).getList()).forEach(this::createSimpleJsonObject);
         writer.writeObjectEnd();
+        writer.writeSeparator();
     }
+
 
     public void writeNumberObject(String left, Number right) {
         writer.writeObjectBegin();
@@ -70,6 +80,7 @@ public class JsonWriter {
 
     public void writeBoolean(Boolean number) {
         writer.writeBoolean(number);
+        writer.writeSeparator();
     }
 
     public StringBuilder getWritableBuilder() {
@@ -123,5 +134,31 @@ public class JsonWriter {
         writer.writeObjectEnd();
         writer.flush();
         return builder;
+    }
+
+    public void writeStringObject(String s) {
+        writer.writeObjectBegin();
+        writer.writeString(s);
+        writer.writeObjectEnd();
+    }
+
+    public void writePrimitive(Number value) {
+        writer.writeNumber(value);
+        writer.writeSeparator();
+    }
+
+    public void writeArrayPrimitive(PrimitiveWriter primitiveWriter) {
+        writer.writeArrayBegin();
+        primitiveWriter.writeArray();
+        writer.writeArrayEnd();
+    }
+
+    public void writeCharacter(char c) {
+        writer.writeString(String.valueOf(c));
+        writer.writeSeparator();
+    }
+
+    public interface PrimitiveWriter {
+        public void writeArray();
     }
 }

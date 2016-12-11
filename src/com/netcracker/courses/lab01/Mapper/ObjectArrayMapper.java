@@ -10,8 +10,6 @@ public class ObjectArrayMapper implements ArrayJsonMapper {
 
     @Override
     public void write(Object[] object, JsonWriter writer) {
-        for (Object i : object) {
-            writer.writeArrayObject(i);
-        }
+        writer.writeArray(object);
     }
 }

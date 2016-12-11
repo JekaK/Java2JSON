@@ -9,6 +9,6 @@ import com.netcracker.courses.lab01.Writers.JsonWriter;
 public class StringMapper implements JsonMapper {
     @Override
     public void write(Object object, JsonWriter writer) {
-
+        writer.writeStringObject(String.valueOf(object));
     }
 }

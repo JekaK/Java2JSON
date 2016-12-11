@@ -26,7 +26,7 @@ public class Writer implements IWriter {
 
     @Override
     public void writeObjectBegin() {
-        string.insert(0, "{");
+        string.append("{");
     }
 
     @Override
@@ -52,9 +52,9 @@ public class Writer implements IWriter {
 
     @Override
     public void writeString(String s) {
-        string.append("\"");
+        string.append("\'");
         string.append(s);
-        string.append("\"");
+        string.append("\'");
     }
 
     @Override

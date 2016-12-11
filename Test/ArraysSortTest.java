@@ -1,5 +1,3 @@
-package Test;
-
 import com.netcracker.courses.Lab00.Sortings.ArraysSort;
 import org.junit.Test;
 
