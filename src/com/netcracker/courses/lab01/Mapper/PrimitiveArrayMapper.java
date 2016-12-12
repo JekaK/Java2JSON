@@ -13,7 +13,8 @@ public class PrimitiveArrayMapper implements PrimitiveArrayJsonMapper {
     public void write(byte[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
             for (int i = 0; i < mass.length; i++) {
-                writer.writePrimitive(mass[i]);
+                writer.writeNumber(mass[i]);
+                writer.writeSeparator();
             }
         });
     }
@@ -22,7 +23,8 @@ public class PrimitiveArrayMapper implements PrimitiveArrayJsonMapper {
     public void write(short[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
             for (int i = 0; i < mass.length; i++) {
-                writer.writePrimitive(mass[i]);
+                writer.writeNumber(mass[i]);
+                writer.writeSeparator();
             }
         });
     }
@@ -31,7 +33,8 @@ public class PrimitiveArrayMapper implements PrimitiveArrayJsonMapper {
     public void write(int[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
             for (int i = 0; i < mass.length; i++) {
-                writer.writePrimitive(mass[i]);
+                writer.writeNumber(mass[i]);
+                writer.writeSeparator();
             }
         });
     }
@@ -40,7 +43,8 @@ public class PrimitiveArrayMapper implements PrimitiveArrayJsonMapper {
     public void write(double[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
             for (int i = 0; i < mass.length; i++) {
-                writer.writePrimitive(mass[i]);
+                writer.writeNumber(mass[i]);
+                writer.writeSeparator();
             }
         });
     }
@@ -49,7 +53,8 @@ public class PrimitiveArrayMapper implements PrimitiveArrayJsonMapper {
     public void write(long[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
             for (int i = 0; i < mass.length; i++) {
-                writer.writePrimitive(mass[i]);
+                writer.writeNumber(mass[i]);
+                writer.writeSeparator();
             }
         });
     }
@@ -58,7 +63,8 @@ public class PrimitiveArrayMapper implements PrimitiveArrayJsonMapper {
     public void write(float[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
             for (int i = 0; i < mass.length; i++) {
-                writer.writePrimitive(mass[i]);
+                writer.writeNumber(mass[i]);
+                writer.writeSeparator();
             }
         });
     }
@@ -67,7 +73,8 @@ public class PrimitiveArrayMapper implements PrimitiveArrayJsonMapper {
     public void write(char[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
             for (int i = 0; i < mass.length; i++) {
-                writer.writeCharacter(mass[i]);
+                writer.writeString(String.valueOf(mass[i]));
+                writer.writeSeparator();
             }
         });
     }

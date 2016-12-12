@@ -1,9 +1,8 @@
 package com.netcracker.courses.lab01.Writers;
 
-import com.netcracker.courses.lab01.CustomObjects.Decompiler;
-import com.netcracker.courses.lab01.CustomPair.Pair;
-
-import java.util.List;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  * Created by jeka on 02.12.16.
@@ -11,151 +10,127 @@ import java.util.List;
 public class JsonWriter {
 
     private Writer writer;
-    private Decompiler decompiler;
-    private StringBuilder builder;
 
-    public JsonWriter() {
-        writer = new Writer(builder = new StringBuilder());
+
+    public JsonWriter(Writer writer) {
+        this.writer = writer;
     }
 
-    public JsonWriter(Object object) {
-        writer = new Writer(builder = new StringBuilder());
-        this.decompiler = new Decompiler(object);
+    public Writer getWriter() {
+        return writer;
     }
 
-    public Decompiler getObject() {
-        return decompiler;
-    }
-
-    public void setObject(Decompiler object) {
-        this.decompiler.setObject(object);
-    }
-
-    public StringBuilder createJson() {
-        List<Object> list = decompiler.getList();
-        StringBuilder result = new StringBuilder();
-        for (Object i : list) {
-            result.append(createObjectJson(i));
+    public void writeObjectBegin() {
+        try {
+            writer.write("{");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return result;
     }
 
-    public void writeArray(Object[] objects) {
-        writer.writeArrayBegin();
-        for (Object i : objects) {
-            writeArrayObject(i);
+
+    public void writeObjectEnd() {
+        if (writer.toString().charAt(writer.toString().length() - 1) == ',') {
+            deleteChar();
         }
-        writer.writeArrayEnd();
+        try {
+            writer.append("}");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void writeArrayObject(Object object) {
-        writer.writeObjectBegin();
-        (new Decompiler(object).getList()).forEach(this::createSimpleJsonObject);
-        writer.writeObjectEnd();
-        writer.writeSeparator();
+    public void writeArrayBegin() {
+        try {
+            writer.append("[");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    public void deleteChar() {
+        StringBuilder value = new StringBuilder(writer.toString());
+        value.deleteCharAt(value.length()-1);
+        try {
+            writer = new StringWriter();
+            writer.write(String.valueOf(value));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void writeNumberObject(String left, Number right) {
-        writer.writeObjectBegin();
-        writer.writeString(left);
-        writer.writePropertySeparator();
-        writer.writeNumber(right);
-        writer.writeObjectEnd();
-        writer.writeSeparator();
+    public void writeArrayEnd() {
+        if (writer.toString().charAt(writer.toString().length() - 1) == ',') {
+            deleteChar();
+        }
+        try {
+            writer.append("]");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeString(String s) {
+        try {
+            writer.append("\'");
+            writer.append(s);
+            writer.append("\'");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void writeNumber(Number number) {
-        writer.writeNumber(number);
-    }
-
-    public void writeBooleanObject(String left, Boolean right) {
-        writer.writeObjectBegin();
-        writer.writeString(left);
-        writer.writePropertySeparator();
-        writer.writeBoolean(right);
-        writer.writeObjectEnd();
-        writer.writeSeparator();
-    }
-
-    public void writeBoolean(Boolean number) {
-        writer.writeBoolean(number);
-        writer.writeSeparator();
-    }
-
-    public StringBuilder getWritableBuilder() {
-        return writer.getValue();
-    }
-
-    public void createSimpleJsonObject(Object o) {
-        if (o instanceof Pair) {
-            if (!(((Pair) o).getRight() instanceof List)) {
-                writer.writeString(String.valueOf(((Pair) o).getLeft()));
-                writer.writePropertySeparator();
-                if (((Pair) o).getRight() instanceof Number) {
-                    writer.writeNumber((Number) ((Pair) o).getRight());
-                } else {
-                    if (((Pair) o).getRight() instanceof Boolean) {
-                        writeBoolean((Boolean) ((Pair) o).getRight());
-                    } else
-                        writer.writeString(((Pair) o).getRight().toString());
-                }
-                writer.writeSeparator();
-            } else {
-                writer.writeString(String.valueOf(((Pair) o).getLeft()));
-                writer.writePropertySeparator();
-                writer.writeArrayBegin();
-                ((List) ((Pair) o).getRight()).forEach(this::createSimpleJsonObject);
-                writer.writeArrayEnd();
-                writer.writeSeparator();
-            }
-        } else if (o instanceof Number) {
-            writeNumber((Number) o);
-            writer.writeSeparator();
-        } else {
-            if (o instanceof List) {
-                writer.writeArrayBegin();
-                ((List) o).forEach(this::createSimpleJsonObject);
-                writer.writeArrayEnd();
-            } else {
-                if (o instanceof Boolean) {
-                    writeBoolean((Boolean) o);
-                } else {
-                    writer.writeString(o.toString());
-                    writer.writeSeparator();
-                }
-            }
+        try {
+            writer.append(String.valueOf(number));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private StringBuilder createObjectJson(Object object) {
-        writer.writeObjectBegin();
-        ((List<Pair<Object, Object>>) object).forEach(this::createSimpleJsonObject);
-        writer.writeObjectEnd();
-        writer.flush();
-        return builder;
+    public void writeSeparator() {
+        try {
+            writer.append(",");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void writeStringObject(String s) {
-        writer.writeObjectBegin();
-        writer.writeString(s);
-        writer.writeObjectEnd();
+    public void writePropertySeparator() {
+        try {
+            writer.append(":");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void writePrimitive(Number value) {
-        writer.writeNumber(value);
-        writer.writeSeparator();
+    public void writeBoolean(boolean value) {
+        try {
+            writer.append(String.valueOf(value));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeNull() {
+        try {
+            writer.append("null");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void flush() {
+        try {
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void writeArrayPrimitive(PrimitiveWriter primitiveWriter) {
-        writer.writeArrayBegin();
         primitiveWriter.writeArray();
-        writer.writeArrayEnd();
-    }
-
-    public void writeCharacter(char c) {
-        writer.writeString(String.valueOf(c));
-        writer.writeSeparator();
     }
 
     public interface PrimitiveWriter {

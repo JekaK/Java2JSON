@@ -20,12 +20,18 @@ public class BooleanMapper implements JsonMapper {
             if (annotations.length != 0)
                 for (Annotation i : annotations) {
                     if (i instanceof JsonProperty) {
-                        writer.writeBooleanObject(((JsonProperty) i).type(), (Boolean) object);
+                        writer.writeObjectBegin();
+                        writer.writeString(((JsonProperty) i).type());
+                        writer.writePropertySeparator();
+                        writer.writeBoolean((Boolean) object);
+                        writer.writeObjectEnd();
+                        writer.writeSeparator();
                     }
                 }
             else {
                 if (Modifier.isPublic(cls.getModifiers())) {
                     writer.writeBoolean((Boolean) object);
+                    writer.writeSeparator();
                 }
             }
         }

@@ -20,7 +20,12 @@ public class NumberMapper implements JsonMapper {
             if (annotations.length != 0)
                 for (Annotation i : annotations) {
                     if (i instanceof JsonProperty) {
-                        writer.writeNumberObject(((JsonProperty) i).type(), (Number) object);
+                        writer.writeObjectBegin();
+                        writer.writeString(((JsonProperty) i).type());
+                        writer.writePropertySeparator();
+                        writer.writeNumber((Number) object);
+                        writer.writeObjectEnd();
+                        writer.writeSeparator();
                     }
                 }
             else {
