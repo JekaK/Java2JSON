@@ -59,7 +59,7 @@ public class Decompiler implements IObject {
     public Object objectsToList(Object o, boolean isFromArray) {
         List result = new ArrayList();
         Class cls = o.getClass();
-        if (Number.class.isAssignableFrom(cls) || String.class.isAssignableFrom(cls) || StringBuilder.class.isAssignableFrom(cls) || StringBuffer.class.isAssignableFrom(cls)) {
+        if (Number.class.isAssignableFrom(cls) || CharSequence.class.isAssignableFrom(cls)) {
             if (isFromArray)
                 list.add(Collections.singletonList(o));
             else
