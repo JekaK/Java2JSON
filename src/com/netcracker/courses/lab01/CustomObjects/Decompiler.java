@@ -94,10 +94,14 @@ public class Decompiler implements IObject {
     public void decompileObject() {
         if (object instanceof List) {
             for (Object i : (List) object) {
-                if (i instanceof List)
+                if (i instanceof List) {
                     list.add(recursionDown(i, new ArrayList()));
-                else
-                    list.add(objectsToList(i, true));
+                } else {
+                    List result = (List) objectsToList(i, true);
+                    if (result.size() != 0)
+                        list.add(result);
+                }
+
             }
         } else {
             if (((List) objectsToList(object, false)).size() != 0)
