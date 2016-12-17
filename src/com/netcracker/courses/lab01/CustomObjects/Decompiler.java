@@ -7,7 +7,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -60,10 +59,7 @@ public class Decompiler implements IObject {
         List result = new ArrayList();
         Class cls = o.getClass();
         if (Number.class.isAssignableFrom(cls) || CharSequence.class.isAssignableFrom(cls)) {
-            if (isFromArray)
-                list.add(Collections.singletonList(o));
-            else
-                list.add(Collections.singletonList(o));
+                list.add(o);
         } else {
             Field[] fields = cls.getDeclaredFields();
             for (Field i : fields) {
@@ -101,7 +97,6 @@ public class Decompiler implements IObject {
                     if (result.size() != 0)
                         list.add(result);
                 }
-
             }
         } else {
             if (((List) objectsToList(object, false)).size() != 0)

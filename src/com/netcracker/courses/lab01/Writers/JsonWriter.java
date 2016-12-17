@@ -50,7 +50,7 @@ public class JsonWriter {
 
     public void deleteChar() {
         StringBuilder value = new StringBuilder(writer.toString());
-        value.deleteCharAt(value.length()-1);
+        value.deleteCharAt(value.length() - 1);
         try {
             writer = new StringWriter();
             writer.write(String.valueOf(value));
@@ -124,6 +124,7 @@ public class JsonWriter {
     public void flush() {
         try {
             writer.flush();
+            writer = new StringWriter();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -134,6 +135,6 @@ public class JsonWriter {
     }
 
     public interface PrimitiveWriter {
-        public void writeArray();
+        void writeArray();
     }
 }
