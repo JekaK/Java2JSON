@@ -25,11 +25,15 @@ public class CollectionMapper implements JsonMapper<Collection> {
     }
 
     private void writeCollection(Object object, JsonWriter writer) {
-        writer.writeObjectBegin();
         SimpleJsonObject jsonObject;
-        jsonObject = new SimpleJsonObject();
-        for (Object j : new Decompiler(object).getList()) jsonObject.createSimpleJsonObject(j, writer);
-        writer.writeObjectEnd();
-        writer.writeSeparator();
+        if (object instanceof Number || object instanceof CharSequence) {
+            jsonObject = new SimpleJsonObject();
+            for (Object j : new Decompiler(object).getList()) jsonObject.createSimpleJsonObject(j, writer);
+        } else {
+            writer.writeObjectBegin();
+            jsonObject = new SimpleJsonObject();
+            for (Object j : new Decompiler(object).getList()) jsonObject.createSimpleJsonObject(j, writer);
+            writer.writeObjectEnd();
+        }
     }
 }

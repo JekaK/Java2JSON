@@ -1,6 +1,6 @@
+package Lab00Tests;
 
-
-import com.netcracker.courses.Lab00.Sortings.MergeSort;
+import com.netcracker.courses.Lab00.Sortings.BubbleSort;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,19 +13,16 @@ import static org.junit.Assert.assertArrayEquals;
 /**
  * Created by jeka on 28.11.16.
  */
-public class MergeSortTest {
-
-    private MergeSort mergeSort;
+public class BubbleSortTest {
+    private BubbleSort bubbleSort;
     private int[] mass, mass1, mass2;
-
 
     private final static int SIZE = 10000;
     private final static int MAX = 20;
 
     @Before
     public void setUp() throws Exception {
-
-        mergeSort = new MergeSort();
+        bubbleSort = new BubbleSort();
         mass = new int[SIZE];
         mass1 = Arrays.copyOf(mass, mass.length);
         mass2 = Arrays.copyOf(mass, mass.length);
@@ -41,25 +38,25 @@ public class MergeSortTest {
 
     }
 
+    @Test(timeout = 100000)
+    public void timeOutTestUp() throws Exception {
+        bubbleSort.bubbleSortDown(mass1);
+    }
+
     @Test
-    public void mergeSortRecursive() throws Exception {
-        mergeSort.mergeSortRecursive(mass1);
+    public void bubbleSortUp() throws Exception {
+        bubbleSort.bubbleSortUp(mass1);
         assertArrayEquals(mass1, mass2);
     }
 
     @Test(timeout = 100000)
-    public void timeOutTestRecursive() throws Exception {
-        mergeSort.mergeSortRecursive(mass1);
-    }
-
-    @Test(timeout = 100000)
-    public void timeOutTestNotRecursive() throws Exception {
-        mergeSort.sortNotRecursive(mass1);
+    public void timeOutTestDown() throws Exception {
+        bubbleSort.bubbleSortDown(mass1);
     }
 
     @Test
-    public void mergeSortNotRecursive() throws Exception {
-        mergeSort.sortNotRecursive(mass1);
+    public void bubbleSortDown() throws Exception {
+        bubbleSort.bubbleSortDown(mass1);
         assertArrayEquals(mass1, mass2);
     }
 

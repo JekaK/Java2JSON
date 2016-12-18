@@ -1,6 +1,6 @@
+package Lab00Tests;
 
-
-import com.netcracker.courses.Lab00.Sortings.BubbleSort;
+import com.netcracker.courses.Lab00.Sortings.QuickSort;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,16 +13,16 @@ import static org.junit.Assert.assertArrayEquals;
 /**
  * Created by jeka on 28.11.16.
  */
-public class BubbleSortTest {
-    private BubbleSort bubbleSort;
+public class QuickSortTest {
+    private QuickSort quickSort;
     private int[] mass, mass1, mass2;
 
-    private final static int SIZE = 10000;
+    private final static int SIZE = 100;
     private final static int MAX = 20;
 
     @Before
     public void setUp() throws Exception {
-        bubbleSort = new BubbleSort();
+        quickSort = new QuickSort();
         mass = new int[SIZE];
         mass1 = Arrays.copyOf(mass, mass.length);
         mass2 = Arrays.copyOf(mass, mass.length);
@@ -33,30 +33,20 @@ public class BubbleSortTest {
         Arrays.sort(mass2);
     }
 
+
     @After
     public void tearDown() throws Exception {
 
     }
 
-    @Test(timeout = 100000)
-    public void timeOutTestUp() throws Exception {
-        bubbleSort.bubbleSortDown(mass1);
+    @Test(timeout = 10)
+    public void timeOutTestQuickSort() throws Exception {
+        quickSort.quickSort(mass1);
     }
 
     @Test
-    public void bubbleSortUp() throws Exception {
-        bubbleSort.bubbleSortUp(mass1);
-        assertArrayEquals(mass1, mass2);
-    }
-
-    @Test(timeout = 100000)
-    public void timeOutTestDown() throws Exception {
-        bubbleSort.bubbleSortDown(mass1);
-    }
-
-    @Test
-    public void bubbleSortDown() throws Exception {
-        bubbleSort.bubbleSortDown(mass1);
+    public void quickSort() throws Exception {
+        quickSort.quickSort(mass1);
         assertArrayEquals(mass1, mass2);
     }
 

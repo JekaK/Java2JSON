@@ -50,7 +50,6 @@ public class SimpleJsonObject {
                     writer.writeBoolean((Boolean) o);
                 } else {
                     writer.writeString(o.toString());
-                    writer.writeSeparator();
                 }
             }
         }

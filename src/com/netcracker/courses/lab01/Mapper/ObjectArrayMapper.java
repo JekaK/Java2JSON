@@ -16,16 +16,21 @@ public class ObjectArrayMapper implements JsonMapper<Object[]> {
         writer.writeArrayBegin();
         for (Object i : object) {
             writeArrayObject(i, writer);
+            writer.writeSeparator();
         }
         writer.writeArrayEnd();
         new SeparatorNormalizer().deleteLastSeparator(writer);
     }
 
     private void writeArrayObject(Object object, JsonWriter writer) {
-        writer.writeObjectBegin();
         SimpleJsonObject jsonObject = new SimpleJsonObject();
-        for (Object j : new Decompiler(object).getList()) jsonObject.createSimpleJsonObject(j, writer);
-        writer.writeObjectEnd();
-        writer.writeSeparator();
+        if (object instanceof Number || object instanceof CharSequence) {
+            for (Object j : new Decompiler(object).getList()) jsonObject.createSimpleJsonObject(j, writer);
+        } else {
+            writer.writeObjectBegin();
+            jsonObject = new SimpleJsonObject();
+            for (Object j : new Decompiler(object).getList()) jsonObject.createSimpleJsonObject(j, writer);
+            writer.writeObjectEnd();
+        }
     }
 }

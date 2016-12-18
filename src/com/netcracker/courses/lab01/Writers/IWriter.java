@@ -1,12 +1,11 @@
 package com.netcracker.courses.lab01.Writers;
 
+import java.io.Writer;
+
 /**
  * Created by jeka on 02.12.16.
  */
 public interface IWriter {
-    public Object getValue();
-
-    public void setValue(StringBuilder value);
 
     public void writeObjectBegin();
 
@@ -29,6 +28,5 @@ public interface IWriter {
     public void writeNull();
 
     public void flush();
-
-    public void showString();
+    public Writer getWriter();
 }

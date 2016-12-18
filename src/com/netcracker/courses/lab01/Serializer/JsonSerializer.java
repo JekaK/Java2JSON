@@ -23,13 +23,13 @@ public class JsonSerializer {
 
     private void generateMappersCache() {
         mappersCache = new HashMap<>();
-        mappersCache.put(BooleanMapper.class, new BooleanMapper());
-        mappersCache.put(CollectionMapper.class, new CollectionMapper());
-        mappersCache.put(MapMapper.class, new MapMapper());
-        mappersCache.put(NumberMapper.class, new NumberMapper());
+        mappersCache.put(Boolean.class, new BooleanMapper());
+        mappersCache.put(Collection.class, new CollectionMapper());
+        mappersCache.put(Map.class, new MapMapper());
+        mappersCache.put(Number.class, new NumberMapper());
         mappersCache.put(ObjectArrayMapper[].class, new ObjectArrayMapper());
         mappersCache.put(PrimitiveArrayMapper.class, new PrimitiveArrayMapper());
-        mappersCache.put(StringMapper.class, new StringMapper());
+        mappersCache.put(CharSequence.class, new StringMapper());
     }
 
     public void serialize(Object object, JsonWriter writer) {
@@ -44,20 +44,20 @@ public class JsonSerializer {
                 mapper = mappersCache.get(ObjectArrayMapper[].class);
             else mapper = mappersCache.get(PrimitiveArrayMapper.class);
         } else if (CharSequence.class.isAssignableFrom(cls))
-            mapper = mappersCache.get(StringMapper.class);
+            mapper = mappersCache.get(CharSequence.class);
         else
             mapper = mappersCache.get(cls);
         if (mapper == null) {
             if (Number.class.isAssignableFrom(cls)) {
-                mapper = mappersCache.get(NumberMapper.class);
+                mapper = mappersCache.get(Number.class);
                 return mapper;
             }
             if (Map.class.isAssignableFrom(cls)) {
-                mapper = mappersCache.get(MapMapper.class);
+                mapper = mappersCache.get(Map.class);
                 return mapper;
             }
             if (Collection.class.isAssignableFrom(cls)) {
-                mapper = mappersCache.get(CollectionMapper.class);
+                mapper = mappersCache.get(Collection.class);
                 return mapper;
             } else {
                 mapper = (object, writer) -> {

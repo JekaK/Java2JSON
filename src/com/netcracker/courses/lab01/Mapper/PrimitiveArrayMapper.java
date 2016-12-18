@@ -11,78 +11,78 @@ public class PrimitiveArrayMapper implements JsonMapper {
 
     public void writeByte(byte[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
-            writer.writeObjectBegin();
+            writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
                 writer.writeSeparator();
             }
-            writer.writeObjectEnd();
+            writer.writeArrayEnd();
         });
     }
 
     public void writeShort(short[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
-            writer.writeObjectBegin();
+            writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
                 writer.writeSeparator();
             }
-            writer.writeObjectEnd();
+            writer.writeArrayEnd();
         });
     }
 
     private void writeInt(int[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
-            writer.writeObjectBegin();
+            writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
                 writer.writeSeparator();
             }
-            writer.writeObjectEnd();
+            writer.writeArrayEnd();
         });
     }
 
     public void writeDouble(double[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
-            writer.writeObjectBegin();
+            writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
                 writer.writeSeparator();
             }
-            writer.writeObjectEnd();
+            writer.writeArrayEnd();
         });
     }
 
     public void writeLong(long[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
-            writer.writeObjectBegin();
+            writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
                 writer.writeSeparator();
             }
-            writer.writeObjectEnd();
+            writer.writeArrayEnd();
         });
     }
 
     public void writeFloat(float[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
-            writer.writeObjectBegin();
+            writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
                 writer.writeSeparator();
             }
-            writer.writeObjectEnd();
+            writer.writeArrayEnd();
         });
     }
 
     public void writeChar(char[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
-            writer.writeObjectBegin();
+            writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeString(String.valueOf(mass[i]));
                 writer.writeSeparator();
             }
-            writer.writeObjectEnd();
+            writer.writeArrayEnd();
         });
     }
 
