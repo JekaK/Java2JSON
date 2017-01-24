@@ -61,7 +61,8 @@ public class IndentedJsonWriter extends JsonWriter {
 
     @Override
     public void writeSeparator() {
-        writeTabCount();
         super.writeSeparator();
+
+        writeTabCount();
     }
 }

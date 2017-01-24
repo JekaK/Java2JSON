@@ -2,7 +2,6 @@ package com.netcracker.courses.lab01.Mapper;
 
 import com.netcracker.courses.lab01.Annotations.JsonProperty;
 import com.netcracker.courses.lab01.Mapper.Interfaces.JsonMapper;
-import com.netcracker.courses.lab01.Normalizer.SeparatorNormalizer;
 import com.netcracker.courses.lab01.Writers.JsonWriter;
 
 import java.lang.annotation.Annotation;
@@ -18,6 +17,7 @@ public class NumberMapper implements JsonMapper<Number> {
         if (object != null) {
             Class cls = object.getClass();
             Annotation[] annotations = cls.getAnnotations();
+            int counter = 0;
             if (annotations.length != 0)
                 for (Annotation i : annotations) {
                     if (i instanceof JsonProperty) {
@@ -26,8 +26,12 @@ public class NumberMapper implements JsonMapper<Number> {
                         writer.writePropertySeparator();
                         writer.writeNumber(object);
                         writer.writeObjectEnd();
-                        writer.writeSeparator();
+                        if (counter < annotations.length - 1) {
+                            writer.writeSeparator();
+                            counter++;
+                        }
                     }
+                    counter = 0;
                 }
             else {
                 if (Modifier.isPublic(cls.getModifiers())) {
@@ -36,7 +40,6 @@ public class NumberMapper implements JsonMapper<Number> {
                     writer.writeObjectEnd();
                 }
             }
-            new SeparatorNormalizer().deleteLastSeparator(writer);
         }
     }
 }

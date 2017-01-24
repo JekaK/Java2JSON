@@ -18,20 +18,22 @@ public class TestClass {
 
     public int anInt = 10;
     public Boolean aBoolean = false;
-    private ArrayList list1;
+    private ArrayList list1, list2;
 
     public TestClass(String value, Double jeka) {
         this.value = value;
         this.jeka = jeka;
         list = new ArrayList();
         list1 = new ArrayList();
-
+        list2 = new ArrayList();
         list.add(10);
         list.add(new Integer(13));
         list1.add(new Integer(100));
         list1.add(new Integer(101));
+        list2.add(list1);
+        list2.add(123);
 
-        list.add(list1);
+        list.add(list2);
     }
 
 }

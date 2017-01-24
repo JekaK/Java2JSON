@@ -1,7 +1,6 @@
 package com.netcracker.courses.lab01.Mapper;
 
 import com.netcracker.courses.lab01.Mapper.Interfaces.JsonMapper;
-import com.netcracker.courses.lab01.Normalizer.SeparatorNormalizer;
 import com.netcracker.courses.lab01.Writers.JsonWriter;
 
 /**
@@ -10,11 +9,16 @@ import com.netcracker.courses.lab01.Writers.JsonWriter;
 public class PrimitiveArrayMapper implements JsonMapper {
 
     public void writeByte(byte[] mass, JsonWriter writer) {
+
         writer.writeArrayPrimitive(() -> {
+            int counter = 0;
             writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
-                writer.writeSeparator();
+                if (counter < mass.length - 1) {
+                    writer.writeSeparator();
+                    counter++;
+                }
             }
             writer.writeArrayEnd();
         });
@@ -22,10 +26,14 @@ public class PrimitiveArrayMapper implements JsonMapper {
 
     public void writeShort(short[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
+            int counter = 0;
             writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
-                writer.writeSeparator();
+                if (counter < mass.length - 1) {
+                    writer.writeSeparator();
+                    counter++;
+                }
             }
             writer.writeArrayEnd();
         });
@@ -33,10 +41,14 @@ public class PrimitiveArrayMapper implements JsonMapper {
 
     private void writeInt(int[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
+            int counter = 0;
             writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
-                writer.writeSeparator();
+                if (counter < mass.length - 1) {
+                    writer.writeSeparator();
+                    counter++;
+                }
             }
             writer.writeArrayEnd();
         });
@@ -44,10 +56,14 @@ public class PrimitiveArrayMapper implements JsonMapper {
 
     public void writeDouble(double[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
+            int counter = 0;
             writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
-                writer.writeSeparator();
+                if (counter < mass.length - 1) {
+                    writer.writeSeparator();
+                    counter++;
+                }
             }
             writer.writeArrayEnd();
         });
@@ -55,10 +71,14 @@ public class PrimitiveArrayMapper implements JsonMapper {
 
     public void writeLong(long[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
+            int counter = 0;
             writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
-                writer.writeSeparator();
+                if (counter < mass.length - 1) {
+                    writer.writeSeparator();
+                    counter++;
+                }
             }
             writer.writeArrayEnd();
         });
@@ -66,10 +86,14 @@ public class PrimitiveArrayMapper implements JsonMapper {
 
     public void writeFloat(float[] mass, JsonWriter writer) {
         writer.writeArrayPrimitive(() -> {
+            int counter = 0;
             writer.writeArrayBegin();
             for (int i = 0; i < mass.length; i++) {
                 writer.writeNumber(mass[i]);
-                writer.writeSeparator();
+                if (counter < mass.length - 1) {
+                    writer.writeSeparator();
+                    counter++;
+                }
             }
             writer.writeArrayEnd();
         });
@@ -88,40 +112,33 @@ public class PrimitiveArrayMapper implements JsonMapper {
 
     @Override
     public void write(Object object, JsonWriter writer) {
-        SeparatorNormalizer normalizer = new SeparatorNormalizer();
+
         if (object instanceof byte[]) {
             writeByte((byte[]) object, writer);
-            normalizer.deleteLastSeparator(writer);
             return;
         }
         if (object instanceof short[]) {
             writeShort((short[]) object, writer);
-            normalizer.deleteLastSeparator(writer);
             return;
         }
         if (object instanceof int[]) {
             writeInt((int[]) object, writer);
-            normalizer.deleteLastSeparator(writer);
             return;
         }
         if (object instanceof double[]) {
             writeDouble((double[]) object, writer);
-            normalizer.deleteLastSeparator(writer);
             return;
         }
         if (object instanceof float[]) {
             writeFloat((float[]) object, writer);
-            normalizer.deleteLastSeparator(writer);
             return;
         }
         if (object instanceof long[]) {
             writeLong((long[]) object, writer);
-            normalizer.deleteLastSeparator(writer);
             return;
         }
         if (object instanceof char[]) {
             writeChar((char[]) object, writer);
-            normalizer.deleteLastSeparator(writer);
         }
     }
 }

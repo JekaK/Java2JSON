@@ -11,6 +11,7 @@ import java.util.List;
 public class SimpleJsonObject {
     public SimpleJsonObject() {
     }
+
     public void createSimpleJsonObject(Object o, JsonWriter writer) {
         if (o instanceof Pair) {
             if (!(((Pair) o).getRight() instanceof List)) {
@@ -24,25 +25,34 @@ public class SimpleJsonObject {
                     } else
                         writer.writeString(((Pair) o).getRight().toString());
                 }
-                writer.writeSeparator();
+
             } else {
                 writer.writeString(String.valueOf(((Pair) o).getLeft()));
                 writer.writePropertySeparator();
                 writer.writeArrayBegin();
+                int counter = 0;
                 for (Object i : (List) ((Pair) o).getRight()) {
                     createSimpleJsonObject(i, writer);
+                    if (counter < ((List) ((Pair) o).getRight()).size()-1) {
+                        writer.writeSeparator();
+                        counter++;
+                    }
                 }
                 writer.writeArrayEnd();
-                writer.writeSeparator();
             }
         } else if (o instanceof Number) {
             writer.writeNumber((Number) o);
-            writer.writeSeparator();
+
         } else {
             if (o instanceof List) {
                 writer.writeArrayBegin();
+                int counter = 0;
                 for (Object i : (List) o) {
                     createSimpleJsonObject(i, writer);
+                    if (counter < ((List) o).size()-1) {
+                        writer.writeSeparator();
+                        counter++;
+                    }
                 }
                 writer.writeArrayEnd();
             } else {
